@@ -1,17 +1,12 @@
 package com.example;
 
-import com.amazonaws.lambda.thirdparty.com.fasterxml.jackson.core.JsonProcessingException;
-import com.amazonaws.lambda.thirdparty.com.fasterxml.jackson.databind.ObjectMapper;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.amazonaws.services.lambda.runtime.serialization.PojoSerializer;
 import com.amazonaws.services.lambda.runtime.serialization.events.LambdaEventSerializers;
-import com.amazonaws.services.lambda.runtime.serialization.factories.JacksonFactory;
 
 public class Main {
-    public static void main(String[] args) throws JsonProcessingException {
-        System.out.println("Hello world");
-
-        String event = "{\n"
+    public static void main(String[] args) {
+        String payload = "{\n"
                 + "    \"Records\": [\n"
                 + "        {\n"
                 + "            \"messageId\": \"83e95a89-bebc-4bbd-a209-181f6ab1110f\",\n"
@@ -34,7 +29,7 @@ public class Main {
 
         PojoSerializer<SQSEvent> serializer = LambdaEventSerializers.serializerFor(SQSEvent.class,
                 Main.class.getClassLoader());
-        SQSEvent sqsEvent1 = serializer.fromJson(event);
-        System.out.println(sqsEvent1);
+        SQSEvent sqsEvent = serializer.fromJson(payload);
+        System.out.println(sqsEvent);
     }
 }
